@@ -3,14 +3,14 @@ package com.moko.beacon.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
 import com.moko.beacon.R;
 import com.moko.beacon.utils.Utils;
 
-import androidx.annotation.Nullable;
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -20,8 +20,8 @@ import butterknife.OnClick;
  * @Description
  * @ClassPath com.moko.beacon.activity.AboutActivity
  */
-public class AboutActivity extends BaseActivity {
-    @BindView(R.id.tv_soft_version)
+public class  AboutActivity extends BaseActivity {
+    @Bind(R.id.tv_soft_version)
     TextView tvSoftVersion;
 
     @Override

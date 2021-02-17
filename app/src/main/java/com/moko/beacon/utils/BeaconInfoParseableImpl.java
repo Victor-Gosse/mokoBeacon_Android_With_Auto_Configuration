@@ -75,7 +75,8 @@ public class BeaconInfoParseableImpl implements DeviceInfoParseable<BeaconInfo> 
         int minor = (manufacturerSpecificDataByte[20] & 0xff) * 0x100 + (manufacturerSpecificDataByte[21] & 0xff);
         int battery = Integer.parseInt(serviceData.substring(0, 2), 16);
 
-        // 连接状态在版本号最高位，0不可连接，1可连接，判断后将版本号归位
+        //
+        // L'état de connexion est le chiffre le plus élevé du numéro de version, 0 n'est pas connectable, 1 est connectable et le numéro de version est remis après jugement
         String versionStr = MokoUtils.hexString2binaryString(serviceData.substring(12, 14));
         // LogModule.i("version binary: " + versionStr);
         String connState = versionStr.substring(0, 1);
@@ -87,11 +88,11 @@ public class BeaconInfoParseableImpl implements DeviceInfoParseable<BeaconInfo> 
         String mac = deviceInfo.mac;
         double distance = MokoUtils.getDistance(deviceInfo.rssi, acc);
         String distanceDesc = "Unknown";
-        if (distance <= 0.1) {
+        if (distance <= 1.0) {
             distanceDesc = "Immediate";
-        } else if (distance > 0.1 && distance <= 1.0) {
+        } else if (distance > 1.0 && distance <= 3.0) {
             distanceDesc = "Near";
-        } else if (distance > 1.0) {
+        } else if (distance > 3.0) {
             distanceDesc = "Far";
         }
         // txPower;

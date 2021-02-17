@@ -14,7 +14,7 @@ public class BeaconConstants {
 
     public static final String SP_KEY_DEVICE_ADDRESS = "sp_key_device_address";
     // extra_key
-    // 设备列表\
+    // Liste des appareils
     public static final String EXTRA_KEY_DEVICE_PARAM = "EXTRA_KEY_DEVICE_PARAM";
     public static final String EXTRA_KEY_DEVICE_INFO = "EXTRA_KEY_DEVICE_INFO";
     public static final String EXTRA_KEY_DEVICE_UUID = "EXTRA_KEY_DEVICE_UUID";

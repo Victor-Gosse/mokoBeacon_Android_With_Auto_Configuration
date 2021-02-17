@@ -9,23 +9,23 @@ import java.io.Serializable;
  * @ClassPath com.moko.beacon.entity.BeaconDeviceInfo
  */
 public class BeaconDeviceInfo implements Serializable{
-    // 软件版本
+    // Version du logiciel
     public String softVersion;
-    // 制造商
+    // Constructeur
     public String firmname;
-    // 产品型号
+    // Modèle de produit
     public String deviceName;
-    // 生产日期
+    // Date de production
     public String iBeaconDate;
-    // MAC地址
+    // Adresse MAC
     public String iBeaconMac;
-    // 芯片型号
+    // Modèle de puce
     public String chipModel;
-    // 硬件版本
+    // Version du matériel
     public String hardwareVersion;
-    // 固件版本
+    // Version du firmware
     public String firmwareVersion;
-    // 运行时间
+    // Durée
     public String runtime;
 
     @Override

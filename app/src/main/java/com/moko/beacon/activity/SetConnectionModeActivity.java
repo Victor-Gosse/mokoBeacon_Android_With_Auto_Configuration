@@ -1,7 +1,15 @@
 package com.moko.beacon.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,24 +17,15 @@ import android.widget.RelativeLayout;
 
 import com.moko.beacon.BeaconConstants;
 import com.moko.beacon.R;
+import com.moko.beacon.service.MokoService;
 import com.moko.beacon.utils.ToastUtils;
 import com.moko.support.MokoConstants;
 import com.moko.support.MokoSupport;
-import com.moko.support.OrderTaskAssembler;
 import com.moko.support.entity.OrderType;
-import com.moko.support.event.ConnectStatusEvent;
-import com.moko.support.event.OrderTaskResponseEvent;
-import com.moko.support.task.OrderTaskResponse;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -38,14 +37,15 @@ import butterknife.OnClick;
  */
 public class SetConnectionModeActivity extends BaseActivity {
 
-    @BindView(R.id.iv_conn_yes)
+    @Bind(R.id.iv_conn_yes)
     ImageView ivConnYes;
-    @BindView(R.id.rl_conn_yes)
+    @Bind(R.id.rl_conn_yes)
     RelativeLayout rlConnYes;
-    @BindView(R.id.iv_conn_no)
+    @Bind(R.id.iv_conn_no)
     ImageView ivConnNo;
-    @BindView(R.id.rl_conn_no)
+    @Bind(R.id.rl_conn_no)
     RelativeLayout rlConnNo;
+    private MokoService mMokoService;
     private HashMap<ViewGroup, View> viewHashMap;
     private String connectMode;
 
@@ -54,6 +54,7 @@ public class SetConnectionModeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection_mode);
         ButterKnife.bind(this);
+        bindService(new Intent(this, MokoService.class), mServiceConnection, BIND_AUTO_CREATE);
         String connection_mode = getIntent().getStringExtra(BeaconConstants.EXTRA_KEY_DEVICE_CONNECTION_MODE);
         viewHashMap = new HashMap<>();
         viewHashMap.put(rlConnYes, ivConnYes);
@@ -63,65 +64,74 @@ public class SetConnectionModeActivity extends BaseActivity {
         } else {
             setViewSelected(rlConnNo);
         }
-        EventBus.getDefault().register(this);
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        unregisterReceiver(mReceiver);
+        unbindService(mServiceConnection);
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING, priority = 200)
-    public void onConnectStatusEvent(ConnectStatusEvent event) {
-        final String action = event.getAction();
-        runOnUiThread(() -> {
-            if (MokoConstants.ACTION_CONN_STATUS_DISCONNECTED.equals(action)) {
-                ToastUtils.showToast(SetConnectionModeActivity.this, getString(R.string.alert_diconnected));
-                SetConnectionModeActivity.this.setResult(BeaconConstants.RESULT_CONN_DISCONNECTED);
-                finish();
-            }
-        });
-    }
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
-    @Subscribe(threadMode = ThreadMode.POSTING, priority = 200)
-    public void onOrderTaskResponseEvent(OrderTaskResponseEvent event) {
-        EventBus.getDefault().cancelEventDelivery(event);
-        final String action = event.getAction();
-        runOnUiThread(() -> {
-            if (MokoConstants.ACTION_ORDER_TIMEOUT.equals(action)) {
-                OrderTaskResponse response = event.getResponse();
-                OrderType orderType = response.orderType;
-                int responseType = response.responseType;
-                byte[] value = response.responseValue;
-                switch (orderType) {
-                    case CONNECTION:
-                        // 修改连接模式失败
-                        ToastUtils.showToast(SetConnectionModeActivity.this, getString(R.string.read_data_failed));
-                        finish();
-                        break;
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            abortBroadcast();
+            if (intent != null) {
+                String action = intent.getAction();
+                if (MokoConstants.ACTION_CONNECT_DISCONNECTED.equals(action)) {
+                    ToastUtils.showToast(SetConnectionModeActivity.this, getString(R.string.alert_diconnected));
+                    SetConnectionModeActivity.this.setResult(BeaconConstants.RESULT_CONN_DISCONNECTED);
+                    finish();
+                }
+                if (MokoConstants.ACTION_RESPONSE_TIMEOUT.equals(action)) {
+                    OrderType orderType = (OrderType) intent.getSerializableExtra(MokoConstants.EXTRA_KEY_RESPONSE_ORDER_TYPE);
+                    switch (orderType) {
+                        case connectionMode:
+                            // Impossible de modifier le mode de connexion
+                            ToastUtils.showToast(SetConnectionModeActivity.this, getString(R.string.read_data_failed));
+                            finish();
+                            break;
+                    }
+                }
+                if (MokoConstants.ACTION_RESPONSE_SUCCESS.equals(action)) {
+                    OrderType orderType = (OrderType) intent.getSerializableExtra(MokoConstants.EXTRA_KEY_RESPONSE_ORDER_TYPE);
+                    switch (orderType) {
+                        case connectionMode:
+                            // Modifier avec succès le mode de connexion
+                            Intent i = new Intent();
+                            i.putExtra(BeaconConstants.EXTRA_KEY_DEVICE_CONNECTION_MODE, connectMode);
+                            SetConnectionModeActivity.this.setResult(RESULT_OK, i);
+                            finish();
+                            break;
+                    }
                 }
             }
-            if (MokoConstants.ACTION_ORDER_FINISH.equals(action)) {
-            }
-            if (MokoConstants.ACTION_ORDER_RESULT.equals(action)) {
-                OrderTaskResponse response = event.getResponse();
-                OrderType orderType = response.orderType;
-                int responseType = response.responseType;
-                byte[] value = response.responseValue;
-                switch (orderType) {
-                    case CONNECTION:
-                        // 修改连接模式成功
-                        Intent i = new Intent();
-                        i.putExtra(BeaconConstants.EXTRA_KEY_DEVICE_CONNECTION_MODE, connectMode);
-                        SetConnectionModeActivity.this.setResult(RESULT_OK, i);
-                        finish();
-                        break;
-                }
-            }
-        });
-    }
+        }
+    };
+
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mMokoService = ((MokoService.LocalBinder) service).getService();
+            // Enregistrer le récepteur de diffusion
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(MokoConstants.ACTION_CONNECT_SUCCESS);
+            filter.addAction(MokoConstants.ACTION_CONNECT_DISCONNECTED);
+            filter.addAction(MokoConstants.ACTION_RESPONSE_SUCCESS);
+            filter.addAction(MokoConstants.ACTION_RESPONSE_TIMEOUT);
+            filter.addAction(MokoConstants.ACTION_RESPONSE_FINISH);
+            filter.setPriority(300);
+            registerReceiver(mReceiver, filter);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    };
 
     @OnClick({R.id.tv_back, R.id.iv_save, R.id.rl_conn_yes, R.id.rl_conn_no})
     public void onClick(View view) {
@@ -134,7 +144,7 @@ public class SetConnectionModeActivity extends BaseActivity {
                     ToastUtils.showToast(this, "bluetooth is closed,please open");
                     return;
                 }
-                MokoSupport.getInstance().sendOrder(OrderTaskAssembler.setConnection(connectMode));
+                mMokoService.sendOrder(mMokoService.setConnectionMode(connectMode));
                 break;
             case R.id.rl_conn_yes:
             case R.id.rl_conn_no:

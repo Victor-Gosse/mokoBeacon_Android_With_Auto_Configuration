@@ -1,15 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.moko.support">
-    <!-- SDCard中创建与删除文件权限 -->
+    <!-- Créer et supprimer des autorisations de fichiers dans SDCard -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!-- 向SDCard写入数据权限 -->
+    <!-- Écrire l'autorisation de données sur SDCard -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- 按时required为true时，则应用只能在支持BLE的Android设备上安装运行；required为false时，Android设备均可正常安装运行 -->
+    <!-- Lorsque requis est vrai à temps, l'application ne peut être installée et exécutée que sur des appareils Android prenant en charge BLE; lorsque requis est faux, les appareils Android peuvent être installés et s'exécuter normalement -->
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />

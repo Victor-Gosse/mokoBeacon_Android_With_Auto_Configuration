@@ -16,7 +16,7 @@ public class ClearLogBackStrategy implements BackupStrategy {
     /**
      * @Date 2017/3/30
      * @Author wenzheng.liu
-     * @Description 比较时间，如果当前时间大于日志最后操作时间，则备份当前日志，重新创建新的日志
+     * @Description Comparez l'heure, si l'heure actuelle est supérieure à la dernière heure d'opération du journal, le journal actuel est sauvegardé et un nouveau journal est recréé
      */
     @Override
     public boolean shouldBackup(File file) {
@@ -29,7 +29,7 @@ public class ClearLogBackStrategy implements BackupStrategy {
     /**
      * @Date 2017/5/9
      * @Author wenzheng.liu
-     * @Description 计算间隔时间
+     * @Description Intervalle de calcul
      */
     public static int getIntervalDays(Calendar from, Calendar to) {
         long dayMillis = 24 * 60 * 60 * 1000;

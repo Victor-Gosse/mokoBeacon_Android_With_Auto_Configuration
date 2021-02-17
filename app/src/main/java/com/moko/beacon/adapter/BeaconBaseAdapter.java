@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @Date 2017/12/8 0008
  * @Author wenzheng.liu
- * @Description 适配器基类
+ * @Description Classe de base de l'adaptateur
  * @ClassPath com.moko.beacon.adapter.BeaconBaseAdapter
  */
 public abstract class BeaconBaseAdapter<T> extends BaseAdapter {
@@ -56,7 +56,7 @@ public abstract class BeaconBaseAdapter<T> extends BaseAdapter {
     }
 
     /**
-     * 绑定ViewHolder
+     * Lier ViewHolder
      *
      * @param position
      * @param viewHolder
@@ -67,7 +67,7 @@ public abstract class BeaconBaseAdapter<T> extends BaseAdapter {
                                            View convertView, ViewGroup parent);
 
     /**
-     * 创建ViewHolder
+     * Créer ViewHolder
      *
      * @param position
      * @param inflater

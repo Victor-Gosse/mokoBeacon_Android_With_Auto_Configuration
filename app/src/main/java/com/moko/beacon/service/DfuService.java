@@ -30,18 +30,31 @@ public class DfuService extends DfuBaseService {
     @Override
     protected Class<? extends Activity> getNotificationTarget() {
         /*
-         * As a target activity the NotificationActivity is returned, not the MainActivity. This is because the notification must create a new task:
-		 * 
+		 * As a target activity the NotificationActivity is returned, not the MainActivity. This is because the notification must create a new task:
+		 *
 		 * intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		 * 
+		 *
 		 * when user press it. Using NotificationActivity we can check whether the new activity is a root activity (that means no other activity was open before)
-		 * or that there is other activity already open. In the later case the notificationActivity will just be closed. System will restore the previous activity from 
+		 * or that there is other activity already open. In the later case the notificationActivity will just be closed. System will restore the previous activity from
 		 * this application - the MainActivity. However if nRF Beacon has been closed during upload and user click the notification a NotificationActivity will
 		 * be launched as a root activity. It will create and start the MainActivity and finish itself.
-		 * 
+		 *
 		 * This method may be used to restore the target activity in case the application was closed or is open. It may also be used to recreate an activity history (see NotificationActivity).
 		 */
+
         return null;
     }
 
 }
+/*
+ * En tant qu'activité cible, la NotificationActivity est renvoyée, pas la MainActivity. En effet, la notification doit créer une nouvelle tâche:
+*
+* intent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+*
+* lorsque l'utilisateur appuie dessus. En utilisant NotificationActivity, nous pouvons vérifier si la nouvelle activité est une activité racine (cela signifie qu'aucune autre activité n'était ouverte auparavant)
+* ou qu'il existe une autre activité déjà ouverte. Dans le dernier cas, la notificationActivity sera simplement fermée. Le système restaurera l'activité précédente à partir de
+* cette application - la MainActivity. Cependant, si la balise nRF a été fermée pendant le téléchargement et que l'utilisateur clique sur la notification, une activité de notification sera
+* être lancé en tant qu'activité racine. Il va créer et démarrer la MainActivity et se terminer.
+*
+* Cette méthode peut être utilisée pour restaurer l'activité cible au cas où l'application était fermée ou ouverte. Il peut également être utilisé pour recréer un historique d'activité (voir NotificationActivity).
+ */

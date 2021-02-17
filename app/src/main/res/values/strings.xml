@@ -110,4 +110,17 @@
     <string name="permission_location_need_content">After that, MokoBeacon could search and connect with the iBeacon</string>
     <string name="disconnect_alert">The device is disconnected. Please click the “CONNECT” on the top to reconnect.</string>
     <string name="device_info_power">Power Off</string>
+    <string name="AutoEnable" translatable="false">Off</string>
+    <string name="Power_Prompt" translatable="false">Choose the power</string>
+    <string name="AutoDialog_Title" translatable="false">Auto configuration result</string>
+    <string-array name="Power_Array">
+        <item>High</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
 </resources>

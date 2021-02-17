@@ -4,14 +4,15 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+
 import com.moko.beacon.R;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.OnClick;
 
 public class BeaconAlertDialog extends BaseDialog<String> {
 
-    @BindView(R.id.tv_connect_alert)
+    @Bind(R.id.tv_connect_alert)
     TextView tvConnectAlert;
 
     public BeaconAlertDialog(Context context) {

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.moko.beacon.R;
 import com.moko.beacon.entity.BeaconInfo;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -71,27 +71,27 @@ public class BeaconListAdapter extends BeaconBaseAdapter<BeaconInfo> {
     }
 
     static class DeviceViewHolder extends ViewHolder {
-        @BindView(R.id.tv_device_name)
+        @Bind(R.id.tv_device_name)
         TextView tvDeviceName;
-        @BindView(R.id.iv_battery_power)
+        @Bind(R.id.iv_battery_power)
         ImageView ivBatteryPower;
-        @BindView(R.id.tv_device_rssi)
+        @Bind(R.id.tv_device_rssi)
         TextView tvDeviceRssi;
-        @BindView(R.id.tv_device_major)
+        @Bind(R.id.tv_device_major)
         TextView tvDeviceMajor;
-        @BindView(R.id.tv_device_minor)
+        @Bind(R.id.tv_device_minor)
         TextView tvDeviceMinor;
-        @BindView(R.id.tv_device_distane_desc)
+        @Bind(R.id.tv_device_distane_desc)
         TextView tvDeviceDistaneDesc;
-        @BindView(R.id.tv_device_conn_state)
+        @Bind(R.id.tv_device_conn_state)
         TextView tvDeviceConnState;
-        @BindView(R.id.tv_device_tx)
+        @Bind(R.id.tv_device_tx)
         TextView tvDeviceTx;
-        @BindView(R.id.tv_device_mac)
+        @Bind(R.id.tv_device_mac)
         TextView tvDeviceMac;
-        @BindView(R.id.tv_device_uuid)
+        @Bind(R.id.tv_device_uuid)
         TextView tvDeviceUuid;
-        @BindView(R.id.tv_device_three_axis)
+        @Bind(R.id.tv_device_three_axis)
         TextView tvDeviceThreeAxis;
 
         public DeviceViewHolder(View convertView) {

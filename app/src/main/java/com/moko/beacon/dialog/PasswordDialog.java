@@ -7,11 +7,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.moko.beacon.R;
 import com.moko.beacon.utils.ToastUtils;
+import com.moko.support.log.LogModule;
 
-import butterknife.BindView;
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -20,15 +22,35 @@ import butterknife.OnClick;
  * @Description
  * @ClassPath com.moko.beacon.dialog.PasswordDialog
  */
-public class PasswordDialog extends BaseDialog {
-    @BindView(R.id.et_password)
+public class PasswordDialog extends BaseDialog  {
+    @Bind(R.id.et_password)
     EditText etPassword;
+    @Bind(R.id.tv_password_ensure)
+    TextView tv_password_ensure;
+
     private String savedPassword;
-    private final String FILTER_ASCII = "\\A\\p{ASCII}*\\z";
+    private String FILTER_ASCII = "\\A\\p{ASCII}*\\z";
+
+    //private final String FILTER_ASCII = "\\A\\p{ASCII}*\\z"; // J'ai enlevé le final
+
+    //public PasswordDialog(Context context) {
+      //  super(context);
+    //}
 
     public PasswordDialog(Context context) {
         super(context);
     }
+
+
+/*
+    private static class SingletonHolder {
+        private static final PasswordDialog INSTANCE = new PasswordDialog();
+    }
+
+    public static PasswordDialog getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+*/
 
     @Override
     protected int getLayoutResId() {
@@ -76,7 +98,7 @@ public class PasswordDialog extends BaseDialog {
         }
     }
 
-    private PasswordClickListener passwordClickListener;
+    public PasswordClickListener passwordClickListener;
 
     public void setOnPasswordClicked(PasswordClickListener passwordClickListener) {
         this.passwordClickListener = passwordClickListener;
@@ -95,15 +117,37 @@ public class PasswordDialog extends BaseDialog {
 
     public void showKeyboard() {
         if (etPassword != null) {
-            //设置可获得焦点
+            //Prêt à se concentrer
             etPassword.setFocusable(true);
             etPassword.setFocusableInTouchMode(true);
-            //请求获得焦点
+            //Demander le focus
             etPassword.requestFocus();
-            //调用系统输入法
+            //Appelez la méthode d'entrée du système
             InputMethodManager inputManager = (InputMethodManager) etPassword
                     .getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.showSoftInput(etPassword, 0);
         }
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////// AUTO CONFIG ////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public void AutoConfirmPass(){
+        //TextView TVConfirmPass=(TextView) findViewById(R.id.tv_password_ensure);
+        //TVConfirmPass.performClick();
+        //tv_password_ensure.setText("OK2");
+        //tv_password_ensure.performClick();
+    }
+
+    public void AutoSetPassword(String pass) {
+        //LogModule.i(etPassword.toString());
+        //LogModule.i(String.valueOf(etPassword));
+        LogModule.i(String.valueOf(R.id.et_password));
+        //EditText test = (EditText) findViewById(R.id.et_password);
+        //LogModule.i(String.valueOf(test));
+        //test.setText(pass);
+        //((EditText) findViewById(R.id.et_password)).setText(myString);
+    }
+
 }

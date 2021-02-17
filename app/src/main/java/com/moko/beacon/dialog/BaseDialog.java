@@ -25,19 +25,25 @@ public abstract class BaseDialog<T> extends Dialog {
     private boolean dismissEnable;
     private Animation animation;
 
-    protected BaseDialog(Context context) {
-        super(context, R.style.BaseDialogTheme);
-    }
+    //protected BaseDialog(Context context) {
+      //  super(context, R.style.BaseDialogTheme);
+    //}
 
     public BaseDialog(Context context, int themeResId) {
         super(context, themeResId);
     }
 
+    public BaseDialog(Context context) {
+        super(context, R.style.BaseDialogTheme);
+    }
+
+
     @SuppressLint("InflateParams")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final View convertView = LayoutInflater.from(getContext()).inflate(getLayoutResId(), null);
+        View convertView = LayoutInflater.from(getContext()).inflate(getLayoutResId(), null);
+        //final View convertView = LayoutInflater.from(getContext()).inflate(getLayoutResId(), null);
         ButterKnife.bind(this, convertView);
         renderConvertView(convertView, t);
         if (animation != null) {
@@ -56,18 +62,22 @@ public abstract class BaseDialog<T> extends Dialog {
 
     protected abstract int getLayoutResId();
 
-    protected abstract void renderConvertView(final View convertView, final T t);
+    //protected abstract void renderConvertView(final View convertView, final T t);
+
+    protected abstract void renderConvertView(View convertView, T t);
 
 
     @Override
     public void show() {
         super.show();
         //set the dialog fullscreen
-        final Window window = getWindow();
+        //final Window window = getWindow();
+        Window window = getWindow();
         assert window != null;
-        final WindowManager.LayoutParams layoutParams = window.getAttributes();
+        //final WindowManager.LayoutParams layoutParams = window.getAttributes();
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        //设置窗口高度为包裹内容
+        // Réglez la hauteur de la fenêtre sur le contenu du package
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(layoutParams);
     }

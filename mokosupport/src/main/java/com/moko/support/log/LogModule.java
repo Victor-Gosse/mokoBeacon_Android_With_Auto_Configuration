@@ -26,12 +26,12 @@ public class LogModule {
     private static String PATH_LOGCAT;
 
     public static void init(Context context) {
-        // 初始化Xlog
+        // Initialiser Xlog
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            // 优先保存到SD卡中
+            // Enregistrer d'abord sur la carte SD
             PATH_LOGCAT = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + LOG_FOLDER;
         } else {
-            // 如果SD卡不存在，就保存到本应用的目录下
+            // Si la carte SD n'existe pas, enregistrez-la dans le répertoire de cette application
             PATH_LOGCAT = context.getFilesDir().getAbsolutePath() + File.separator + LOG_FOLDER;
         }
         Printer filePrinter = new FilePrinter.Builder(PATH_LOGCAT)
@@ -54,9 +54,7 @@ public class LogModule {
         XLog.d(msg);
     }
 
-    public static void i(String msg) {
-        XLog.i(msg);
-    }
+    public static void i(String msg) { XLog.i(msg); }
 
     public static void w(String msg) {
         XLog.w(msg);

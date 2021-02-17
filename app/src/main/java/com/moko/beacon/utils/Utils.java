@@ -14,9 +14,9 @@ import android.location.LocationManager;
 public class Utils {
 
     public static String getVersionInfo(Context context) {
-        // 获取packagemanager的实例
+        // Obtenez une instance de packagemanager
         PackageManager packageManager = context.getPackageManager();
-        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        // getPackageName () est le nom du package de votre classe actuelle, 0 signifie obtenir les informations de version
         PackageInfo packInfo = null;
         try {
             packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
@@ -31,7 +31,7 @@ public class Utils {
     }
 
     /**
-     * 手机是否开启位置服务，如果没有开启那么所有app将不能使用定位功能
+     * Que le service de localisation du téléphone mobile soit activé, s'il ne l'est pas, toutes les applications ne pourront pas utiliser la fonction de localisation
      */
     public static boolean isLocServiceEnable(Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);

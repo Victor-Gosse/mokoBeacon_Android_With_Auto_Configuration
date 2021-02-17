@@ -9,30 +9,30 @@ import java.io.Serializable;
  * @ClassPath com.moko.beacon.entity.BeaconParam
  */
 public class BeaconParam implements Serializable {
-    // 设备电量
+    // Puissance de l'appareil
     public String battery;
     public String uuid;
     public String major;
     public String minor;
-    // 校验距离
+    // Distance d'étalonnage
     public String measurePower;
-    // 广播功率
+    // Puissance de diffusion
     public String transmission;
-    // 广播周期
+    // Cycle de diffusion
     public String broadcastingInterval;
-    // 设备ID
+    // ID de l'appareil
     public String serialID;
-    // MAC地址
+    // Adresse MAC
     public String iBeaconMAC;
-    // 设备名称
+    // Nom de l'appareil
     public String iBeaconName;
-    // 连接模式
+    // Mode de connexion
     public String connectionMode;
-    // 系统信息
+    // Informations système
     public BeaconDeviceInfo beaconInfo;
-    // 密码
+    // Mot de passe
     public String password;
-    // 三轴数据
+    // Données triaxiales
     public String threeAxis;
 
     @Override

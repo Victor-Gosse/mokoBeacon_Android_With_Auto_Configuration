@@ -15,14 +15,14 @@ import java.util.List;
  */
 public class MokoUtils {
     /**
-     * A - 发射端和接收端相隔1米时的信号强度
+     * A - La force du signal lorsque l'émetteur et le récepteur sont à 1 mètre l'un de l'autre
      */
-    private static final double n_Value = 2.0;/** n - 环境衰减因子*/
+    private static final double n_Value = 2.0;/** n - Facteur d'atténuation environnementale */
 
     /**
      * @Date 2017/12/11 0011
      * @Author wenzheng.liu
-     * @Description 根据Rssi获得返回的距离, 返回数据单位为m
+     * @Description Obtenez la distance retournée selon Rssi, l'unité de données retournée est m
      */
     public static double getDistance(int rssi, int acc) {
         int iRssi = Math.abs(rssi);
@@ -53,7 +53,7 @@ public class MokoUtils {
     /**
      * @Date 2017/5/16
      * @Author wenzheng.liu
-     * @Description 16进制转2进制
+     * @Description Hexadécimal en binaire
      */
     public static String hexString2binaryString(String hexString) {
         if (hexString == null || hexString.length() % 2 != 0)
@@ -71,7 +71,7 @@ public class MokoUtils {
     /**
      * @Date 2017/6/9
      * @Author wenzheng.liu
-     * @Description 2进制转16进制
+     * @Description 2 à 16
      */
     public static String binaryString2hexString(String bString) {
         if (bString == null || bString.equals("") || bString.length() % 8 != 0)
@@ -88,7 +88,7 @@ public class MokoUtils {
         return tmp.toString();
     }
 
-    // 字符串转换为16进制
+    // Convertir une chaîne en hexadécimal
     public static String string2Hex(String s) {
         String str = "";
         for (int i = 0; i < s.length(); i++) {
@@ -99,7 +99,7 @@ public class MokoUtils {
         return str;
     }
 
-    // 16进制转换为字符串
+    // Convertir hexadécimal en chaîne
     public static String hex2String(String s) {
         byte[] baKeyword = new byte[s.length() / 2];
         for (int i = 0; i < baKeyword.length; i++) {
@@ -135,7 +135,7 @@ public class MokoUtils {
     /**
      * @Date 2017/8/15
      * @Author wenzheng.liu
-     * @Description 将byte数组bRefArr转为一个整数, 字节数组的低位是整型的低字节位
+     * @Description Convertissez le tableau d'octets bRefArr en un entier, l'octet de poids faible du tableau d'octets est l'octet de poids faible de l'entier
      */
     public static int toInt(byte[] bRefArr) {
         int iOutcome = 0;
@@ -151,14 +151,14 @@ public class MokoUtils {
     /**
      * @Date 2017/8/14 0014
      * @Author wenzheng.liu
-     * @Description 整数转换成byte数组
+     * @Description Convertir un entier en tableau d'octets
      */
     public static byte[] toByteArray(int iSource, int iArrayLen) {
         byte[] bLocalArr = new byte[iArrayLen];
         for (int i = 0; (i < 4) && (i < iArrayLen); i++) {
             bLocalArr[i] = (byte) (iSource >> 8 * i & 0xFF);
         }
-        // 数据反了,需要做个翻转
+        // Les données sont inversées, vous devez faire un flip
         byte[] bytes = new byte[iArrayLen];
         for (int i = 0; i < bLocalArr.length; i++) {
             bytes[bLocalArr.length - 1 - i] = bLocalArr[i];
@@ -201,7 +201,7 @@ public class MokoUtils {
     }
 
     /**
-     * 位运算结果的反推函数10 -> 2 | 8;
+     * Fonction inverse du résultat de l'opération de bit Dix -> 2 | 8;
      */
     static private List<Integer> getElement(int number) {
         List<Integer> result = new ArrayList<>();

@@ -5,7 +5,7 @@ import com.moko.support.entity.DeviceInfo;
 /**
  * @Date 2018/1/11
  * @Author wenzheng.liu
- * @Description 设备解析接口
+ * @Description Interface de résolution de périphérique
  * @ClassPath com.moko.support.service.DeviceInfoParseable
  */
 public interface DeviceInfoParseable<T> {
