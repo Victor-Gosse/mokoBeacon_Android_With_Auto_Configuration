@@ -1,4 +1,4 @@
-# Transmission Power auto configuration of many beacons
+# Transmission power auto configuration of many beacons
 
 This project is a fork of the application mokoBeacon for android based on the version 1.3.2.
 
